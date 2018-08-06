@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class CollectionButtonState extends State < CollectionButton > {
-  bool _isSaved = false;
+class _CollectionButtonState extends State<CollectionButton> {
+  bool isSaved = false;
   Widget build(BuildContext context) {
     return new IconButton(
-      icon: _isSaved ? new Icon(Icons.star) : new Icon(Icons.star_border),  
-      onPressed: (){},
+      icon: isSaved ? new Icon(Icons.star) : new Icon(Icons.star_border),
+      onPressed: () {},
     );
   }
 }
 
 class CollectionButton extends StatefulWidget {
   @override
-  createState() => new CollectionButtonState();
+  createState() => new _CollectionButtonState();
 }
