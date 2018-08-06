@@ -4,14 +4,17 @@ import 'dart:async';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as Http;
 
+typedef void _CallbackVoid();
+
 class FileDownloader {
   List<String> _dictionaryStack = new List<String>();
+  _CallbackVoid onDownloadComplete;
 
-  Future<String> _getBasePath() async =>
+  Future<String> getBasePath() async =>
       (await getApplicationDocumentsDirectory()).path + '/';
 
-  Future<String> _getFullPath() async {
-    String fullPath = await _getBasePath();
+  Future<String> getFullPath() async {
+    String fullPath = await getBasePath();
     for (String dirName in _dictionaryStack) {
       fullPath += dirName;
       fullPath += '/';
@@ -19,8 +22,13 @@ class FileDownloader {
     return fullPath;
   }
 
-  Future<Null> download(String url, String fileName,
-      [void onComplete()]) async {
+  Future<Null> download(String url, String fileName) async {
+    File file = new File((await getFullPath()) + fileName);
+    if (file.existsSync()) {
+      if (onDownloadComplete != null) onDownloadComplete();
+      return;
+    }
+    file.createSync();
     Http.Client client = new Http.Client();
     Http.Response response = await client.get(url);
     if (response.statusCode != 200) {
@@ -28,22 +36,16 @@ class FileDownloader {
           '下载失败了！', url, fileName, response.statusCode);
     }
     Uint8List bytes = response.bodyBytes;
-    File file = new File((await _getFullPath()) + fileName);
-    if (file.existsSync()) {
-      file.deleteSync();
-    }
-    file.createSync();
     file.writeAsBytesSync(bytes);
-    if (onComplete != null) onComplete();
+    if (onDownloadComplete != null) onDownloadComplete();
   }
 
   Future<Null> cd(String dictionaryName) async {
-    if(dictionaryName=='..'){
+    if (dictionaryName == '..') {
       _dictionaryStack.removeLast();
       return;
     }
-    Directory directory =
-        new Directory((await _getFullPath()) + dictionaryName);
+    Directory directory = new Directory((await getFullPath()) + dictionaryName);
     if (!directory.existsSync()) {
       directory.createSync(recursive: true);
     }
