@@ -52,7 +52,6 @@ class _PageFileServiceState extends State < PageFileService > {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     string = item.title;
