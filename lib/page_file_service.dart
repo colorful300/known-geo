@@ -7,7 +7,6 @@ import 'page_image.dart';
 class PageFileService extends StatefulWidget {
   final Set collectionMap;
   final FileServiceItem item;
-  bool storeCollection = true;
   @override
   State < StatefulWidget > createState() => new _PageFileServiceState(item, collectionMap);
   PageFileService(this.item, this.collectionMap);
