@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
 class _CollectionButtonState extends State < CollectionButton > {
-  bool isSaved;
+  bool _isSaved;
   final bool isPage;
   final Set container;
   final element;
 
   Widget build(BuildContext context) {
+    _isSaved = container.contains(element);
     return !isPage ? new IconButton(
-      icon: isSaved ? new Icon(Icons.star) : new Icon(Icons.star_border),
+      icon: _isSaved ? new Icon(Icons.star) : new Icon(Icons.star_border),
       color: Colors.red,
       onPressed: () {
-        isSaved = !isSaved;
-        if (isSaved) {
+        _isSaved = !_isSaved;
+        if (_isSaved) {
           container.add(element);
         } else {
           container.remove(element);
@@ -35,12 +36,6 @@ class _CollectionButtonState extends State < CollectionButton > {
                       new MaterialPageRoute(
                         builder: (context) {
                           return collections.build(context);
-                          // return new Scaffold(
-                          //   appBar: new AppBar(
-                          //     title: new Text(collections.string),
-                          //   ),
-                          //   body: collections,
-                          // );
                         }
                       )
                     );
@@ -67,12 +62,10 @@ class _CollectionButtonState extends State < CollectionButton > {
     this.isPage,
     this.container,
     this.element,
-    this.isSaved,
   });
 }
 
 class CollectionButton extends StatefulWidget {
-  final bool isSaved;
   final bool isPage;
   final Set container;
   final element;
@@ -80,7 +73,6 @@ class CollectionButton extends StatefulWidget {
   @override
   createState() => new _CollectionButtonState(isPage: isPage, container: container, element: element,);
   CollectionButton({
-    this.isSaved,
     this.isPage,
     this.container,
     this.element,

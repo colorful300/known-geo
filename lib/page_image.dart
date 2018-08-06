@@ -15,7 +15,6 @@ class PageImage extends StatefulWidget {
 class _PageImageState extends State<StatefulWidget> {
   Map document;
   final Set collectionMap;
-  bool storeCollection = true;
   FileDownloader downloader = new FileDownloader();
   Widget image;
   String string;
@@ -52,11 +51,6 @@ class _PageImageState extends State<StatefulWidget> {
     super.initState();
   }
 
-  bool setStoreCollection() {
-    storeCollection = !storeCollection;
-    return !storeCollection;
-  }
-
   @override
   Widget build(BuildContext context) {
     string = document['title'];
@@ -65,7 +59,6 @@ class _PageImageState extends State<StatefulWidget> {
         title: new Text(document['title']),
         actions: <Widget>[
           new CollectionButton(
-            isSaved: setStoreCollection(),
             isPage: false,
             container: collectionMap,
             element: this,

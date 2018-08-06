@@ -65,8 +65,6 @@ class _PageFileServiceState extends State < PageFileService > {
         title: new Text(item.title),
         actions: < Widget > [
           new CollectionButton(
-            isPage: false,
-            isSaved: setStoreCollection(),
             container: collectionMap,
             element: this,
           )
