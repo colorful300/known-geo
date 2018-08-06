@@ -5,15 +5,20 @@ import 'collection_button.dart';
 import 'page_image.dart';
 
 class PageFileService extends StatefulWidget {
+  final Set collectionMap;
   final FileServiceItem item;
+  bool storeCollection = true;
   @override
-  State<StatefulWidget> createState() => new _PageFileServiceState(item);
-  PageFileService(this.item);
+  State < StatefulWidget > createState() => new _PageFileServiceState(item, collectionMap);
+  PageFileService(this.item, this.collectionMap);
 }
 
-class _PageFileServiceState extends State<PageFileService> {
+class _PageFileServiceState extends State < PageFileService > {
+  final Set collectionMap;
   FileServiceItem item;
+  String string;
   FileService fileService = new FileService();
+  bool storeCollection = false;
 
   @override
   void dispose() {
@@ -39,7 +44,7 @@ class _PageFileServiceState extends State<PageFileService> {
           onTap: () {
             if (fileService.fileList[index]['format'] == 'jpg') {
               Navigator.push(context, new MaterialPageRoute(builder: (context) {
-                return new PageImage(fileService.fileList[index]);
+                return new PageImage(fileService.fileList[index], collectionMap);
               }));
             }
           },
@@ -48,15 +53,29 @@ class _PageFileServiceState extends State<PageFileService> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: AppBar(
-          title: new Text(item.title),
-          actions: <Widget>[new CollectionButton()],
-        ),
-        body: body());
+  bool setStoreCollection() {
+    storeCollection = !storeCollection;
+    return !storeCollection;
   }
 
-  _PageFileServiceState(this.item);
+  @override
+  Widget build(BuildContext context) {
+    string = item.title;
+    return new Scaffold(
+      appBar: AppBar(
+        title: new Text(item.title),
+        actions: < Widget > [
+          new CollectionButton(
+            isPage: false,
+            isSaved: setStoreCollection(),
+            container: collectionMap,
+            element: this,
+          )
+        ],
+      ),
+      body: body()
+    );
+  }
+
+  _PageFileServiceState(this.item, this.collectionMap);
 }

@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
+import 'collection_button.dart';
 import 'file_downloader.dart';
 import 'texted_widget.dart';
 import 'dart:io';
 
 class PageImage extends StatefulWidget {
+  final Set collectionMap;
   final Map document;
   @override
-  State<StatefulWidget> createState() => new _PageImageState(document);
-  PageImage(this.document);
+  State<StatefulWidget> createState() => new _PageImageState(document, collectionMap);
+  PageImage(this.document, this.collectionMap);
 }
 
 class _PageImageState extends State<StatefulWidget> {
   Map document;
+  final Set collectionMap;
+  bool storeCollection = true;
   FileDownloader downloader = new FileDownloader();
   Widget image;
+  String string;
 
   Widget child() {
     if (image != null) {
@@ -47,15 +52,29 @@ class _PageImageState extends State<StatefulWidget> {
     super.initState();
   }
 
+  bool setStoreCollection() {
+    storeCollection = !storeCollection;
+    return !storeCollection;
+  }
+
   @override
   Widget build(BuildContext context) {
+    string = document['title'];
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(document['title']),
+        actions: <Widget>[
+          new CollectionButton(
+            isSaved: setStoreCollection(),
+            isPage: false,
+            container: collectionMap,
+            element: this,
+          )
+        ],
       ),
       body: new Center(child: child()),
     );
   }
 
-  _PageImageState(this.document);
+  _PageImageState(this.document, this.collectionMap);
 }
