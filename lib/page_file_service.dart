@@ -17,7 +17,6 @@ class _PageFileServiceState extends State < PageFileService > {
   FileServiceItem item;
   String string;
   FileService fileService = new FileService();
-  bool storeCollection = false;
 
   @override
   void dispose() {
@@ -61,6 +60,7 @@ class _PageFileServiceState extends State < PageFileService > {
         actions: < Widget > [
           new CollectionButton(
             container: collectionMap,
+            isPage: false,
             element: this,
           )
         ],
