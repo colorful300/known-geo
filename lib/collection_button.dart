@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
 class _CollectionButtonState extends State < CollectionButton > {
-  bool _isSaved;
   final bool isPage;
   final Set container;
   final element;
 
   Widget build(BuildContext context) {
-    _isSaved = container.contains(element);
+    bool _isSaved = container.contains(element);
     return !isPage ? new IconButton(
       icon: _isSaved ? new Icon(Icons.star) : new Icon(Icons.star_border),
       color: Colors.red,

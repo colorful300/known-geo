@@ -52,10 +52,6 @@ class _PageFileServiceState extends State < PageFileService > {
     );
   }
 
-  bool setStoreCollection() {
-    storeCollection = !storeCollection;
-    return !storeCollection;
-  }
 
   @override
   Widget build(BuildContext context) {
