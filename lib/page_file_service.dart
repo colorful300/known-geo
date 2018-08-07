@@ -5,17 +5,15 @@ import 'collection_button.dart';
 import 'page_image.dart';
 
 class PageFileService extends StatefulWidget {
-  final Map<String, Map> collections;
   final FileServiceItem item;
   final Map data;
   @override
   State<StatefulWidget> createState() =>
-      new _PageFileServiceState(collections, item, data);
-  PageFileService(this.collections, this.item, this.data);
+      new _PageFileServiceState(item, data);
+  PageFileService(this.item, this.data);
 }
 
 class _PageFileServiceState extends State<PageFileService> {
-  final Map<String, Map> collections;
   final FileServiceItem item;
   Map data;
   FileService fileService = new FileService();
@@ -63,7 +61,7 @@ class _PageFileServiceState extends State<PageFileService> {
           onTap: () {
             if (fileData['format'] == 'jpg') {
               Navigator.push(context, new MaterialPageRoute(builder: (context) {
-                return new PageImage(collections, fileData);
+                return new PageImage(fileData);
               }));
             }
           },
@@ -78,11 +76,11 @@ class _PageFileServiceState extends State<PageFileService> {
         appBar: data != null
             ? AppBar(
                 title: new Text(data['title']),
-                actions: <Widget>[new CollectionButton(collections, data)],
+                actions: <Widget>[new CollectionButton(data)],
               )
             : AppBar(title: new Text(item.title)),
         body: body());
   }
 
-  _PageFileServiceState(this.collections, this.item, this.data);
+  _PageFileServiceState(this.item, this.data);
 }

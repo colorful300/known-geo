@@ -3,6 +3,7 @@ import 'file_service.dart';
 import 'texted_widget.dart';
 import 'page_file_service.dart';
 import 'page_collection.dart';
+import 'page_setting.dart';
 
 class PageSearch extends StatefulWidget {
   @override
@@ -13,7 +14,6 @@ class _PageSearchState extends State<PageSearch> {
   bool centerSearch = true;
   bool zeroItem = false;
   Map<String, bool> hasCollected = new Map<String, bool>();
-  Map<String, Map> collections = new Map<String, Map>();
   List<FileServiceItem> fileServiceList = new List<FileServiceItem>();
   int pageCount;
   TextEditingController textEditingController = new TextEditingController();
@@ -152,7 +152,6 @@ class _PageSearchState extends State<PageSearch> {
                         context,
                         new MaterialPageRoute(
                             builder: (context) => new PageFileService(
-                                collections,
                                 fileServiceList[calculatedIndex],
                                 null)));
                   },
@@ -196,7 +195,15 @@ class _PageSearchState extends State<PageSearch> {
             icon: Icon(Icons.list),
             onPressed: () {
               Navigator.push(context, new MaterialPageRoute(builder: (context) {
-                return new PageCollection(collections);
+                return new PageCollection();
+              }));
+            },
+          ),
+          new IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(context, new MaterialPageRoute(builder: (context) {
+                return new PageSetting();
               }));
             },
           )

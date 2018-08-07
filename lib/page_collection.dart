@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'page_image.dart';
 import 'page_file_service.dart';
+import 'setting.dart';
 
 class PageCollection extends StatefulWidget {
-  final Map<String, Map> collections;
   @override
-  State<StatefulWidget> createState() => new _PageCollectionState(collections);
-  PageCollection(this.collections);
+  State<StatefulWidget> createState() => new _PageCollectionState();
+  PageCollection();
 }
 
 class _PageCollectionState extends State<PageCollection> {
-  final Map<String, Map> collections;
-
-  _PageCollectionState(this.collections);
+  _PageCollectionState();
 
   Widget leading(String format) {
     if (format == 'jpg') {
@@ -31,9 +29,9 @@ class _PageCollectionState extends State<PageCollection> {
           title: new Text('我的收藏'),
         ),
         body: ListView.builder(
-          itemCount: collections.length,
+          itemCount: Setting.collections.length,
           itemBuilder: (context, index) {
-            Map data = collections.values.toList()[index];
+            Map data = Setting.collections.values.toList()[index];
             if (data.containsKey('format')) {
               return new ListTile(
                 leading: leading(data['format']),
@@ -42,7 +40,7 @@ class _PageCollectionState extends State<PageCollection> {
                 onTap: () {
                   Navigator.push(context,
                       new MaterialPageRoute(builder: (context) {
-                    return new PageImage(collections, data);
+                    return new PageImage(data);
                   }));
                 },
               );
@@ -53,7 +51,7 @@ class _PageCollectionState extends State<PageCollection> {
               onTap: () {
                 Navigator.push(context,
                     new MaterialPageRoute(builder: (context) {
-                  return new PageFileService(collections, null, data);
+                  return new PageFileService(null, data);
                 }));
               },
             );

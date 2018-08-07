@@ -3,18 +3,16 @@ import 'collection_button.dart';
 import 'file_downloader.dart';
 import 'texted_widget.dart';
 import 'dart:io';
+import 'setting.dart';
 
 class PageImage extends StatefulWidget {
-  final Map<String, Map> collections;
   final Map document;
   @override
-  State<StatefulWidget> createState() =>
-      new _PageImageState(collections,document);
-  PageImage(this.collections,this.document);
+  State<StatefulWidget> createState() => new _PageImageState(document);
+  PageImage(this.document);
 }
 
 class _PageImageState extends State<StatefulWidget> {
-  final Map<String, Map> collections;
   final Map document;
   FileDownloader downloader = new FileDownloader();
   Widget image;
@@ -37,6 +35,10 @@ class _PageImageState extends State<StatefulWidget> {
   void initState() {
     downloader.onDownloadComplete = () async {
       File file = new File((await downloader.getFullPath()) + document['guid']);
+      if (!Setting.downloads.contains(document['guid'])) {
+        Setting.downloads.add(document['guid']);
+        Setting.saveDownloads();
+      }
       if (file.lengthSync() < 32) {
         image = new TextedIcon(Icons.cancel, text: new Text('未在服务器上找到图片！'));
       } else {
@@ -47,7 +49,12 @@ class _PageImageState extends State<StatefulWidget> {
     downloader
       ..cd('cache')
       ..cd('images')
-      ..download(document['datalink'] + '1920_1080', document['guid']);
+      ..download(
+          document['datalink'] +
+              Setting.settings['resolusionX'].toString() +
+              '_' +
+              Setting.settings['resolusionY'].toString(),
+          document['guid']);
     super.initState();
   }
 
@@ -57,11 +64,11 @@ class _PageImageState extends State<StatefulWidget> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(document['title']),
-        actions: <Widget>[new CollectionButton(collections, document)],
+        actions: <Widget>[new CollectionButton(document)],
       ),
       body: new Center(child: child()),
     );
   }
 
-  _PageImageState(this.collections,this.document);
+  _PageImageState(this.document);
 }
