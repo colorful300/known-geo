@@ -80,7 +80,6 @@ class FileService {
   Map serviceData;
   _CallbackService onLoadComplete;
   bool hasLoad=false;
-  List<Map> fileList=new List<Map>();
 
   FileService()
       : client = new Http.Client(),
@@ -176,11 +175,6 @@ class FileService {
         },
         body: 'FileId=' + fileId));
     serviceData = jsonDecode(Escape.decode(response.body));
-    serviceData['files'].forEach((name, value) {
-      for(Map map in value){
-        fileList.add(map);
-      }
-    });
     hasLoad=true;
     if (onLoadComplete != null) onLoadComplete(this);
   }
