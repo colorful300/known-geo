@@ -16,7 +16,7 @@ class _PageSettingState extends State<PageSetting> {
         ),
         body: new ListView(
           children: <Widget>[
-            new _MaxResolusionSetting(),
+            //new _MaxResolusionSetting(),
             new _ClearCacheFiles()
           ],
         ));

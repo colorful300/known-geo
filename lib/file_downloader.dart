@@ -7,11 +7,12 @@ import 'package:http/http.dart' as Http;
 typedef void _CallbackVoid();
 
 class FileDownloader {
+  Future<Directory> baseDictionary = getApplicationDocumentsDirectory();
   List<String> _dictionaryStack = new List<String>();
   _CallbackVoid onDownloadComplete;
+  String error;
 
-  Future<String> getBasePath() async =>
-      (await getApplicationDocumentsDirectory()).path + '/';
+  Future<String> getBasePath() async => (await baseDictionary).path + '/';
 
   Future<String> getFullPath() async {
     String fullPath = await getBasePath();
@@ -28,15 +29,18 @@ class FileDownloader {
       if (onDownloadComplete != null) onDownloadComplete();
       return;
     }
-    file.createSync();
-    Http.Client client = new Http.Client();
-    Http.Response response = await client.get(url);
-    if (response.statusCode != 200) {
-      throw new FileDownloadFailException(
-          '下载失败了！', url, fileName, response.statusCode);
+    try {
+      Http.Client client = new Http.Client();
+      Http.Response response = await client.get(url);
+      if (response.statusCode != 200) {
+        error = '下载失败了！\nstatus code: ' + response.statusCode.toString();
+      }
+      Uint8List bytes = response.bodyBytes;
+      file.createSync();
+      file.writeAsBytesSync(bytes);
+    } catch (e) {
+      error = e.toString();
     }
-    Uint8List bytes = response.bodyBytes;
-    file.writeAsBytesSync(bytes);
     if (onDownloadComplete != null) onDownloadComplete();
   }
 
@@ -58,7 +62,7 @@ class FileDownloader {
 
   Future<Null> delete(String fileName) async {
     File file = new File((await getFullPath()) + fileName);
-    if(file.existsSync()){
+    if (file.existsSync()) {
       file.deleteSync();
     }
   }
@@ -73,18 +77,5 @@ class FileDownloader {
       directory.createSync();
     }
     _dictionaryStack.add(dictionaryName);
-  }
-}
-
-class FileDownloadFailException implements Exception {
-  final message;
-  final String url;
-  final String fileName;
-  final int statusCode;
-  FileDownloadFailException(
-      [this.message, this.url, this.fileName, this.statusCode]);
-  String toString() {
-    if (message == null) return "Exception";
-    return "Exception: $message\nurl: $url\nFile name: $fileName\nStatus code: $statusCode";
   }
 }

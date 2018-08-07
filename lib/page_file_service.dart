@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'file_service.dart';
 import 'texted_widget.dart';
 import 'collection_button.dart';
-import 'page_image.dart';
+import 'page_open_file.dart';
 
 class PageFileService extends StatefulWidget {
   final FileServiceItem item;
   final Map data;
   @override
-  State<StatefulWidget> createState() =>
-      new _PageFileServiceState(item, data);
+  State<StatefulWidget> createState() => new _PageFileServiceState(item, data);
   PageFileService(this.item, this.data);
 }
 
@@ -47,7 +46,9 @@ class _PageFileServiceState extends State<PageFileService> {
     List<Map> fileList = new List<Map>();
     data['files'].forEach((key, value) {
       for (Map file in value) {
-        fileList.add(file);
+        if (file['format'] != 'none') {
+          fileList.add(file);
+        }
       }
     });
     return new ListView.builder(
@@ -59,11 +60,9 @@ class _PageFileServiceState extends State<PageFileService> {
           title: new Text(fileData['title']),
           subtitle: new Text('文件类型: ' + fileData['format']),
           onTap: () {
-            if (fileData['format'] == 'jpg') {
-              Navigator.push(context, new MaterialPageRoute(builder: (context) {
-                return new PageImage(fileData);
-              }));
-            }
+            Navigator.push(context, new MaterialPageRoute(builder: (context) {
+              return new PageOpenFile(fileData);
+            }));
           },
         );
       },

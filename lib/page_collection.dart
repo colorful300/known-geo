@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'page_image.dart';
+import 'page_open_file.dart';
 import 'page_file_service.dart';
 import 'setting.dart';
 
@@ -40,7 +40,7 @@ class _PageCollectionState extends State<PageCollection> {
                 onTap: () {
                   Navigator.push(context,
                       new MaterialPageRoute(builder: (context) {
-                    return new PageImage(data);
+                    return new PageOpenFile(data);
                   }));
                 },
               );
