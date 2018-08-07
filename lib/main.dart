@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'page_search.dart';
+import 'setting.dart';
 
 void initGlobals() {
   //FileService.init();
+  Setting.load();
+  Setting.loadCollections();
+  Setting.loadDownloads();
 }
 
 void main() {
