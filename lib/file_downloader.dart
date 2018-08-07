@@ -40,6 +40,29 @@ class FileDownloader {
     if (onDownloadComplete != null) onDownloadComplete();
   }
 
+  Future<Null> write(String contents, String fileName) async {
+    File file = new File((await getFullPath()) + fileName);
+    if (!file.existsSync()) {
+      file.createSync();
+    }
+    file.writeAsStringSync(contents);
+  }
+
+  Future<String> read(String fileName) async {
+    File file = new File((await getFullPath()) + fileName);
+    if (!file.existsSync()) {
+      return null;
+    }
+    return file.readAsString();
+  }
+
+  Future<Null> delete(String fileName) async {
+    File file = new File((await getFullPath()) + fileName);
+    if(file.existsSync()){
+      file.deleteSync();
+    }
+  }
+
   Future<Null> cd(String dictionaryName) async {
     if (dictionaryName == '..') {
       _dictionaryStack.removeLast();
@@ -47,7 +70,7 @@ class FileDownloader {
     }
     Directory directory = new Directory((await getFullPath()) + dictionaryName);
     if (!directory.existsSync()) {
-      directory.createSync(recursive: true);
+      directory.createSync();
     }
     _dictionaryStack.add(dictionaryName);
   }
