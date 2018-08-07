@@ -5,16 +5,17 @@ import 'texted_widget.dart';
 import 'dart:io';
 
 class PageImage extends StatefulWidget {
-  final Set collectionMap;
+  final Map<String, Map> collections;
   final Map document;
   @override
-  State<StatefulWidget> createState() => new _PageImageState(document, collectionMap);
-  PageImage(this.document, this.collectionMap);
+  State<StatefulWidget> createState() =>
+      new _PageImageState(collections,document);
+  PageImage(this.collections,this.document);
 }
 
 class _PageImageState extends State<StatefulWidget> {
-  Map document;
-  final Set collectionMap;
+  final Map<String, Map> collections;
+  final Map document;
   FileDownloader downloader = new FileDownloader();
   Widget image;
   String string;
@@ -35,7 +36,6 @@ class _PageImageState extends State<StatefulWidget> {
   @override
   void initState() {
     downloader.onDownloadComplete = () async {
-      print('download success');
       File file = new File((await downloader.getFullPath()) + document['guid']);
       if (file.lengthSync() < 32) {
         image = new TextedIcon(Icons.cancel, text: new Text('未在服务器上找到图片！'));
@@ -57,17 +57,11 @@ class _PageImageState extends State<StatefulWidget> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(document['title']),
-        actions: <Widget>[
-          new CollectionButton(
-            isPage: false,
-            container: collectionMap,
-            element: this,
-          )
-        ],
+        actions: <Widget>[new CollectionButton(collections, document)],
       ),
       body: new Center(child: child()),
     );
   }
 
-  _PageImageState(this.document, this.collectionMap);
+  _PageImageState(this.collections,this.document);
 }
