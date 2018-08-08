@@ -3,17 +3,17 @@ import 'file_service.dart';
 import 'texted_widget.dart';
 import 'collection_button.dart';
 import 'page_open_file.dart';
-import 'drawer.dart';
+import 'drawer_data_detail.dart';
 
 class PageFileService extends StatefulWidget {
   final FileServiceItem item;
   final Map data;
   @override
-  State < StatefulWidget > createState() => new _PageFileServiceState(item, data);
+  State<StatefulWidget> createState() => new _PageFileServiceState(item, data);
   PageFileService(this.item, this.data);
 }
 
-class _PageFileServiceState extends State < PageFileService > {
+class _PageFileServiceState extends State<PageFileService> {
   final FileServiceItem item;
   Map data;
   FileService fileService = new FileService();
@@ -44,7 +44,7 @@ class _PageFileServiceState extends State < PageFileService > {
       fileService.loadService(item.url);
       return new Center(child: new CircleProgress(text: new Text('资料查询中')));
     }
-    List < Map > fileList = new List < Map > ();
+    List<Map> fileList = new List<Map>();
     data['files'].forEach((key, value) {
       for (Map file in value) {
         if (file['format'] != 'none') {
@@ -73,23 +73,14 @@ class _PageFileServiceState extends State < PageFileService > {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: data != null ?
-      AppBar(
-        title: new Text(data['title']),
-        actions: < Widget > [new CollectionButton(data)],
-      ) :
-      AppBar(title: new Text(item.title)),
-      drawer: data != null ?
-      MyDrawer(
-        isInfor: true,
-        service: data,
-      ) :
-      MyDrawer(
-        isInfor: false,
-        service: data,
-      ),
-      body: body()
-    );
+        appBar: data != null
+            ? AppBar(
+                title: new Text(data['title']),
+                actions: <Widget>[new CollectionButton(data)],
+              )
+            : AppBar(title: new Text(item.title)),
+        drawer: DrawerDataDetail(data),
+        body: body());
   }
 
   _PageFileServiceState(this.item, this.data);
