@@ -23,7 +23,6 @@ class _PageSearchState extends State<PageSearch> {
 
   Widget body() {
     if (!FileService.hasInit) {
-      FileService.init();
       FileService.onInitComplete = () {
         setState(() {});
       };
