@@ -8,7 +8,7 @@ class _CollectionButtonState extends State<CollectionButton> {
     bool isSaved = Setting.collections.containsKey(data['guid']);
     return new IconButton(
       icon: isSaved ? new Icon(Icons.star) : new Icon(Icons.star_border),
-      color: Colors.yellow,
+      color: Colors.white,
       onPressed: () {
         isSaved = !isSaved;
         if (isSaved) {
