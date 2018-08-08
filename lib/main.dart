@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'page_search.dart';
 import 'setting.dart';
+import 'file_service.dart';
 
 void initGlobals() {
-  //FileService.init();
+  FileService.init();
   Setting.load();
   Setting.loadCollections();
   Setting.loadDownloads();
