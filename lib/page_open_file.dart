@@ -5,6 +5,7 @@ import 'texted_widget.dart';
 import 'dart:io';
 import 'setting.dart';
 import 'file_permission.dart';
+import 'drawer_data_detail.dart';
 
 class PageOpenFile extends StatefulWidget {
   final Map document;
@@ -149,6 +150,7 @@ class _PageOpenFileState extends State<StatefulWidget>
         actions: <Widget>[new CollectionButton(document)],
       ),
       body: new Center(child: child()),
+      drawer: new DrawerDataDetail(document),
       floatingActionButton: floating(),
     );
   }
