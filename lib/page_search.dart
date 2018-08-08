@@ -196,7 +196,7 @@ class _PageSearchState extends State < PageSearch > {
       title: new Text(title),
       actions: < Widget > [
         new IconButton(
-          icon: Icon(Icons.list),
+          icon: Icon(Icons.folder_special),
           onPressed: () {
             Navigator.push(context, new MaterialPageRoute(builder: (context) {
               return new PageCollection();
