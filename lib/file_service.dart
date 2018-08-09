@@ -7,7 +7,6 @@ import 'dart:isolate';
 
 typedef void _CallbackList(List<FileServiceItem> services);
 typedef void _CallbackService(FileService service);
-typedef void _CallbackMap(Map documents);
 typedef void _CallbackVoid();
 
 /*
@@ -55,11 +54,9 @@ document的属性
 */
 
 class FileServiceItem {
-  int id;
-  String guid;
-  String title;
   String url;
-  FileServiceItem(this.id, this.guid, this.title, this.url);
+  String title;
+  FileServiceItem(this.url, this.title);
 }
 
 class FileService {
@@ -67,7 +64,9 @@ class FileService {
   static _CallbackVoid onInitComplete;
   static final String url =
       'http://www.ngac.org.cn/DataService/FileService.ashx';
-  static final RegExp listRegExp = new RegExp(r'(\d+?)\t(.+?)\t(.+?)\t(.+)');
+  static final String documentUrl =
+      'http://www.ngac.org.cn/Document/document_cs.aspx?mdidntId=';
+  static final RegExp listRegExp = new RegExp(r'(.+?)\t(.+)');
   static final RegExp regExp = new RegExp('FileId=(\\w+?)&');
   static bool hasInit = false;
   static ReceivePort _receivePort;
@@ -79,7 +78,7 @@ class FileService {
   Http.Client client;
   Map serviceData;
   _CallbackService onLoadComplete;
-  bool hasLoad=false;
+  String error;
 
   FileService()
       : client = new Http.Client(),
@@ -130,8 +129,8 @@ class FileService {
           case _COMMAND_GET_SERVICE_LIST_FILE:
             waitForData = false;
             listRegExp.allMatches(data).forEach((match) {
-              fileServiceList.add(new FileServiceItem(int.parse(match.group(1)),
-                  match.group(2), match.group(3), match.group(4)));
+              fileServiceList.add(new FileServiceItem(
+                  documentUrl + match.group(1), match.group(2)));
             });
             initSendPort.send(_COMMAND_INIT_COMPLETE);
             break;
@@ -166,6 +165,8 @@ class FileService {
     Http.Response response = (await client.post(serviceUrl));
     Match match = regExp.firstMatch(response.body);
     if (match == null) {
+      error = '服务器数据错误';
+      if (onLoadComplete != null) onLoadComplete(this);
       return;
     }
     String fileId = match.group(1);
@@ -175,16 +176,7 @@ class FileService {
         },
         body: 'FileId=' + fileId));
     serviceData = jsonDecode(Escape.decode(response.body));
-    hasLoad=true;
     if (onLoadComplete != null) onLoadComplete(this);
-  }
-
-  void forEachDocument(_CallbackMap callback) {
-    serviceData['files'].forEach((name, list) {
-      for (Map doc in list) {
-        callback(doc);
-      }
-    });
   }
 
   static void searchServices(List<String> keywords, _CallbackList callback) {
