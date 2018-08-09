@@ -66,7 +66,12 @@ class _PageOpenFileState extends State<StatefulWidget>
       setState(() {});
     };
     if (document['format'] == 'jpg') {
-      downloader.download(document['datalink'] + '512_512', document['guid']);
+      downloader.download(
+          document['datalink'] +
+              Setting.settings['resolusionX'].toString() +
+              '_' +
+              Setting.settings['resolusionY'].toString(),
+          document['guid']);
     } else {
       loaded = new TextedIcon(Icons.broken_image, text: new Text('没有预览'));
     }

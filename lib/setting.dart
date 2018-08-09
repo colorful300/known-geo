@@ -4,8 +4,8 @@ import 'dart:convert';
 abstract class Setting {
   static FileDownloader fileSaver = new FileDownloader();
   static Map<String, dynamic> settings = {
-    'resolusionX': 1920,
-    'resolusionY': 1080
+    'resolusionX': 512,
+    'resolusionY': 512,
   };
   static Map<String, dynamic> collections = new Map<String, Map>();
   static List downloads = new List();

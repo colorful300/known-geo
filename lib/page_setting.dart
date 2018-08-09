@@ -16,8 +16,9 @@ class _PageSettingState extends State<PageSetting> {
         ),
         body: new ListView(
           children: <Widget>[
-            //new _MaxResolusionSetting(),
-            new _ClearCacheFiles()
+            new _MaxResolusionSetting(),
+            new _ClearCacheFiles(),
+            new _About(),
           ],
         ));
   }
@@ -37,7 +38,7 @@ class _MaxResolusionSettingState extends State<_MaxResolusionSetting> {
   @override
   Widget build(BuildContext context) {
     return new ExpansionTile(
-      title: new Text('设置图片最大分辨率'),
+      title: new Text('预览图片最大分辨率'),
       children: <Widget>[
         new TextField(
           decoration: new InputDecoration(
@@ -90,13 +91,13 @@ class _ClearCacheFiles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new ExpansionTile(
-      title: new Text('清除缓存'),
+      title: new Text('清理缓存'),
       children: <Widget>[
         new Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             new FlatButton(
-              child: new Text('确认清除'),
+              child: new Text('确认清理'),
               onPressed: () {
                 FileDownloader deleter = new FileDownloader()
                   ..cd('cache')
@@ -110,6 +111,34 @@ class _ClearCacheFiles extends StatelessWidget {
             )
           ],
         )
+      ],
+    );
+  }
+}
+
+class _About extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new ExpansionTile(
+      title: new Text('关于'),
+      children: <Widget>[
+        /*
+        new ListTile(
+          title: new Text('团队'),
+          subtitle: new Text('<Team Name>'),
+        ),
+        */
+        new ListTile(
+          title: new Text('应用框架'),
+          subtitle: new Text('Flutter: https://flutter.io/'),
+        ),
+        new ListTile(
+          subtitle: new Text('依赖项'),
+        ),
+        new ListTile(
+          title: new Text('Simple Permissions'),
+          subtitle: new Text('https://github.com/Ethras/flutter_simple_permissions'),
+        ),
       ],
     );
   }
