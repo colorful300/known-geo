@@ -16,6 +16,7 @@ class PageFileService extends StatefulWidget {
 class _PageFileServiceState extends State<PageFileService> {
   final FileServiceItem item;
   Map data;
+  String error;
   FileService fileService = new FileService();
 
   @override
@@ -35,11 +36,15 @@ class _PageFileServiceState extends State<PageFileService> {
   }
 
   Widget body() {
-    if (data == null) {
+    if (error != null) {
+      return new TextedIcon(Icons.not_interested, text: new Text(error));
+    } else if (data == null) {
       fileService.onLoadComplete = (service) {
-        setState(() {
+        if (fileService.error != null)
+          error = fileService.error;
+        else
           data = fileService.serviceData;
-        });
+        setState(() {});
       };
       fileService.loadService(item.url);
       return new Center(child: new CircleProgress(text: new Text('资料查询中')));
