@@ -122,22 +122,25 @@ class _About extends StatelessWidget {
     return new ExpansionTile(
       title: new Text('关于'),
       children: <Widget>[
-        /*
         new ListTile(
           title: new Text('团队'),
-          subtitle: new Text('<Team Name>'),
+          subtitle: new Text('Team Known Geo App'),
         ),
-        */
         new ListTile(
           title: new Text('应用框架'),
           subtitle: new Text('Flutter: https://flutter.io/'),
         ),
         new ListTile(
-          subtitle: new Text('依赖项'),
+          subtitle: new Text(
+            '依赖项',
+            style: TextStyle(color: Colors.blue),
+          ),
+          dense: true,
         ),
         new ListTile(
           title: new Text('Simple Permissions'),
-          subtitle: new Text('https://github.com/Ethras/flutter_simple_permissions'),
+          subtitle:
+              new Text('https://github.com/Ethras/flutter_simple_permissions'),
         ),
       ],
     );
