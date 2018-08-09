@@ -22,7 +22,7 @@ class _DrawerDataDetailState extends State<DrawerDataDetail> {
     'eastbl': '东边界',
     'northbl': '北边界',
     'southbl': '南边界',
-    'abs': '描述',
+    'abs': '摘要',
     'guid': '唯一标识符',
     'mdidnt': '档号',
     'geocode': '地理代码',
