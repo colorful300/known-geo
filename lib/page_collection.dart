@@ -5,11 +5,11 @@ import 'setting.dart';
 
 class PageCollection extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => new _PageCollectionState();
+  State < StatefulWidget > createState() => new _PageCollectionState();
   PageCollection();
 }
 
-class _PageCollectionState extends State<PageCollection> {
+class _PageCollectionState extends State < PageCollection > {
   _PageCollectionState();
 
   Widget leading(String format) {
@@ -25,10 +25,46 @@ class _PageCollectionState extends State<PageCollection> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(
-          title: new Text('我的收藏'),
+      appBar: new AppBar(
+        title: new Text('我的收藏'),
+      ),
+      // body: ListView.builder(
+      //   itemCount: Setting.collections.length,
+      //   itemBuilder: (context, index) {
+      //     Map data = Setting.collections.values.toList()[index];
+      //     if (data.containsKey('format')) {
+      //       return new ListTile(
+      //         leading: leading(data['format']),
+      //         title: new Text(data['title']),
+      //         subtitle: new Text('文件类型: ' + data['format']),
+      //         onTap: () {
+      //           Navigator.push(context,
+      //             new MaterialPageRoute(builder: (context) {
+      //               return new PageOpenFile(data);
+      //             }));
+      //         },
+      //       );
+      //     }
+      //     return new ListTile(
+      //       leading: new Icon(Icons.folder),
+      //       title: new Text(data['title']),
+      //       onTap: () {
+      //         Navigator.push(context,
+      //           new MaterialPageRoute(builder: (context) {
+      //             return new PageFileService(null, data);
+      //           }));
+      //       },
+      //     );
+      //   },
+      // )
+      body: new Container(
+        decoration: BoxDecoration(
+          image: new DecorationImage(
+            image: AssetImage('assets/image/list_page.jpg'),
+            fit: BoxFit.fill,
+          ),
         ),
-        body: ListView.builder(
+        child: ListView.builder(
           itemCount: Setting.collections.length,
           itemBuilder: (context, index) {
             Map data = Setting.collections.values.toList()[index];
@@ -39,9 +75,9 @@ class _PageCollectionState extends State<PageCollection> {
                 subtitle: new Text('文件类型: ' + data['format']),
                 onTap: () {
                   Navigator.push(context,
-                      new MaterialPageRoute(builder: (context) {
-                    return new PageOpenFile(data);
-                  }));
+                    new MaterialPageRoute(builder: (context) {
+                      return new PageOpenFile(data);
+                    }));
                 },
               );
             }
@@ -50,12 +86,15 @@ class _PageCollectionState extends State<PageCollection> {
               title: new Text(data['title']),
               onTap: () {
                 Navigator.push(context,
-                    new MaterialPageRoute(builder: (context) {
-                  return new PageFileService(null, data);
-                }));
+                  new MaterialPageRoute(builder: (context) {
+                    return new PageFileService(null, data);
+                  })
+                );
               },
             );
           },
-        ));
+        )
+      ),
+    );
   }
 }

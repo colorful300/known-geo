@@ -24,43 +24,56 @@ class _PageSearchState extends State < PageSearch > {
   String title = 'Known Geo';
 
   Widget body() {
+
     if (!FileService.hasInit) {
       FileService.onInitComplete = () {
         setState(() {});
       };
+
       return new Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: < Widget > [
+
           new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: < Widget > [
               new CircularProgressIndicator(),
-              new Text('文件服务列表加载中')
-            ])
+              new Text(
+                '文件服务列表加载中',
+                style: new TextStyle(
+                  color: Colors.white
+                ),
+              )
+            ]
+          ),
         ],
       );
     }
+
     return new Column(
       mainAxisAlignment:
       centerSearch ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: searchWidgetWithList(),
     );
+
   }
 
   Widget searchWidget() {
     return new Container(
-      padding: new EdgeInsets.fromLTRB(16.0, 0.0, 32.0, 0.0),
+      padding: new EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
       decoration: new BoxDecoration(
-        borderRadius: BorderRadius.circular(2.0),
-        //  image:  //  then there should be a image 
+        borderRadius: BorderRadius.circular(0.0),
       ),
       child: new TextField(
         controller: textEditingController,
         decoration: new InputDecoration(
           icon: new Icon(Icons.search),
           hintText: '搜索关键词，如「成都 地下水」',
+          hintStyle: TextStyle(
+            color: Colors.white,
+          )
         ),
         onChanged: (input) {
           zeroItem = false;
@@ -125,7 +138,7 @@ class _PageSearchState extends State < PageSearch > {
               if (index == 0) {
                 if (page != 0) {
                   return new ListTile(
-                    leading: const Icon(Icons.arrow_left),
+                    leading: const Icon(Icons.arrow_left, color: Colors.white, ),
                       title: new Text('上一页'),
                       onTap: () {
                         setState(() {
@@ -141,27 +154,35 @@ class _PageSearchState extends State < PageSearch > {
                   );
                 }
                 return new ListTile(
-                  title: new Text('全部文档: '),
+                  title: new Text('全部文档: ', style: new TextStyle(color: Colors.white),),
                 );
               }
               if (index != 19) {
                 int calculatedIndex = index + page * 18 - 1;
                 return new ListTile(
-                  leading: new Icon(Icons.folder),
-                  title: new Text(fileServiceList[calculatedIndex].title),
+                  leading: new Icon(Icons.folder, color: Colors.white, ),
+                  title: new Text(fileServiceList[calculatedIndex].title, style: new TextStyle(color: Colors.white),),
                   onTap: () {
                     Navigator.push(
                       context,
                       new MaterialPageRoute(
                         builder: (context) => new PageFileService(
                           fileServiceList[calculatedIndex],
-                          null)));
+                          null
+                        )
+                      )
+                    );
                   },
                 );
               }
               return new ListTile(
-                leading: const Icon(Icons.arrow_right),
-                  title: new Text('下一页'),
+                leading: const Icon(Icons.arrow_right, color: Colors.white, ),
+                  title: new Text(
+                    '下一页',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                   onTap: () {
                     setState(() {
                       ++page;
@@ -182,7 +203,7 @@ class _PageSearchState extends State < PageSearch > {
           child: new Center(
             child: zeroItem ?
             new TextedIcon(Icons.no_sim, text: new Text('空')) :
-            new CircleProgress(text: new Text('正在搜索'))
+            new CircleProgress(text: new Text('正在搜索', style: new TextStyle(color: Colors.white), ))
           )
         ));
       }
@@ -193,13 +214,24 @@ class _PageSearchState extends State < PageSearch > {
   @override
   Widget build(BuildContext context) => new Scaffold(
     appBar: new AppBar(
+      flexibleSpace: new FlexibleSpaceBar(
+        background: Image.asset('assets/image/home_page.jpg')
+      ),
       title: new Text(title),
       actions: < Widget > [
         new IconButton(
           icon: Icon(Icons.folder_special),
           onPressed: () {
             Navigator.push(context, new MaterialPageRoute(builder: (context) {
-              return new PageCollection();
+              return new Container(
+                decoration: BoxDecoration(
+                  image: new DecorationImage(
+                    image: AssetImage('assets/image/list_page.jpg'),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                child: new PageCollection(),
+              );
             }));
           },
         ),
@@ -213,5 +245,14 @@ class _PageSearchState extends State < PageSearch > {
         )
       ],
     ),
-    body: body());
+    body: new Container(
+      decoration: BoxDecoration(
+        image: new DecorationImage(
+          image: AssetImage('assets/image/home_page.jpg'),
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: body(),
+    ),
+  );
 }

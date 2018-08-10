@@ -4,32 +4,48 @@ import 'file_downloader.dart';
 
 class PageSetting extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => new _PageSettingState();
+  State < StatefulWidget > createState() => new _PageSettingState();
 }
 
-class _PageSettingState extends State<PageSetting> {
+class _PageSettingState extends State < PageSetting > {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(
-          title: new Text('设置'),
+      appBar: new AppBar(
+        title: new Text('设置'),
+      ),
+      // body: new ListView(
+      //   children: < Widget > [
+      //     new _MaxResolusionSetting(),
+      //     new _ClearCacheFiles(),
+      //     new _About(),
+      //   ],
+      // )
+      body: new Container(
+        decoration: BoxDecoration(
+          image: new DecorationImage(
+            image: AssetImage('assets/image/list_page.jpg'),
+            fit: BoxFit.fill,
+          ),
         ),
-        body: new ListView(
-          children: <Widget>[
+        child: new ListView(
+          children: < Widget > [
             new _MaxResolusionSetting(),
             new _ClearCacheFiles(),
             new _About(),
           ],
-        ));
+        )
+      ),
+    );
   }
 }
 
 class _MaxResolusionSetting extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => new _MaxResolusionSettingState();
+  State < StatefulWidget > createState() => new _MaxResolusionSettingState();
 }
 
-class _MaxResolusionSettingState extends State<_MaxResolusionSetting> {
+class _MaxResolusionSettingState extends State < _MaxResolusionSetting > {
   final TextEditingController controllerX = new TextEditingController();
   final TextEditingController controllerY = new TextEditingController();
   final FocusNode focusNodeX = new FocusNode();
@@ -39,30 +55,30 @@ class _MaxResolusionSettingState extends State<_MaxResolusionSetting> {
   Widget build(BuildContext context) {
     return new ExpansionTile(
       title: new Text('预览图片最大分辨率'),
-      children: <Widget>[
+      children: < Widget > [
         new TextField(
           decoration: new InputDecoration(
-              labelText: 'X轴最大像素',
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 8.0),
-              hintText: Setting.settings['resolusionX'].toString()),
+            labelText: 'X轴最大像素',
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 8.0),
+            hintText: Setting.settings['resolusionX'].toString()),
           controller: controllerX,
           focusNode: focusNodeX,
           keyboardType: TextInputType.number,
         ),
         new TextField(
           decoration: new InputDecoration(
-              labelText: 'Y轴最大像素',
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 8.0),
-              hintText: Setting.settings['resolusionY'].toString()),
+            labelText: 'Y轴最大像素',
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 8.0),
+            hintText: Setting.settings['resolusionY'].toString()),
           controller: controllerY,
           focusNode: focusNodeY,
           keyboardType: TextInputType.number,
         ),
         new Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
+          children: < Widget > [
             new FlatButton(
               child: new Text('更改'),
               onPressed: () {
@@ -92,10 +108,10 @@ class _ClearCacheFiles extends StatelessWidget {
   Widget build(BuildContext context) {
     return new ExpansionTile(
       title: new Text('清理缓存'),
-      children: <Widget>[
+      children: < Widget > [
         new Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
+          children: < Widget > [
             new FlatButton(
               child: new Text('确认清理'),
               onPressed: () {
@@ -121,7 +137,7 @@ class _About extends StatelessWidget {
   Widget build(BuildContext context) {
     return new ExpansionTile(
       title: new Text('关于'),
-      children: <Widget>[
+      children: < Widget > [
         new ListTile(
           title: new Text('团队'),
           subtitle: new Text('Team Known Geo App'),
@@ -140,7 +156,7 @@ class _About extends StatelessWidget {
         new ListTile(
           title: new Text('Simple Permissions'),
           subtitle:
-              new Text('https://github.com/Ethras/flutter_simple_permissions'),
+          new Text('https://github.com/Ethras/flutter_simple_permissions'),
         ),
       ],
     );

@@ -22,6 +22,7 @@ class AppMain extends StatelessWidget {
       title: 'Known Geo',
       theme: new ThemeData(
         primarySwatch: Colors.blue,
+        //primaryColor: Colors.white,
       ),
       home: new PageSearch(),
     );

@@ -9,11 +9,11 @@ class PageFileService extends StatefulWidget {
   final FileServiceItem item;
   final Map data;
   @override
-  State<StatefulWidget> createState() => new _PageFileServiceState(item, data);
+  State < StatefulWidget > createState() => new _PageFileServiceState(item, data);
   PageFileService(this.item, this.data);
 }
 
-class _PageFileServiceState extends State<PageFileService> {
+class _PageFileServiceState extends State < PageFileService > {
   final FileServiceItem item;
   Map data;
   String error;
@@ -47,9 +47,9 @@ class _PageFileServiceState extends State<PageFileService> {
         setState(() {});
       };
       fileService.loadService(item.url);
-      return new Center(child: new CircleProgress(text: new Text('资料查询中')));
+      return new Center(child: new CircleProgress(text: new Text('资料查询中', style: new TextStyle(color: Colors.white70), )));
     }
-    List<Map> fileList = new List<Map>();
+    List < Map > fileList = new List < Map > ();
     data['files'].forEach((key, value) {
       for (Map file in value) {
         if (file['format'] != 'none') {
@@ -64,7 +64,7 @@ class _PageFileServiceState extends State<PageFileService> {
         return new ListTile(
           leading: leading(fileData['format']),
           title: new Text(fileData['title']),
-          subtitle: new Text('文件类型: ' + fileData['format']),
+          subtitle: new Text('文件类型: ' + fileData['format'],),
           onTap: () {
             Navigator.push(context, new MaterialPageRoute(builder: (context) {
               return new PageOpenFile(fileData);
@@ -78,14 +78,23 @@ class _PageFileServiceState extends State<PageFileService> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: data != null
-            ? AppBar(
-                title: new Text(data['title']),
-                actions: <Widget>[new CollectionButton(data)],
-              )
-            : AppBar(title: new Text(item.title)),
-        drawer: DrawerDataDetail(data),
-        body: body());
+      appBar: data != null ?
+      AppBar(
+        title: new Text(data['title'], ),
+        actions: < Widget > [new CollectionButton(data)],
+      ) :
+      AppBar(title: new Text(item.title)),
+      drawer: DrawerDataDetail(data),
+      body: new Container(
+        decoration: BoxDecoration(
+          image: new DecorationImage(
+            image: AssetImage('assets/image/list_page.jpg'),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: body(),
+      ),
+    );
   }
 
   _PageFileServiceState(this.item, this.data);
