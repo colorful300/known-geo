@@ -47,7 +47,7 @@ class _PageFileServiceState extends State < PageFileService > {
         setState(() {});
       };
       fileService.loadService(item.url);
-      return new Center(child: new CircleProgress(text: new Text('资料查询中', style: new TextStyle(color: Colors.white70), )));
+      return new Center(child: new CircleProgress(text: new Text('资料查询中',)));
     }
     List < Map > fileList = new List < Map > ();
     data['files'].forEach((key, value) {
@@ -85,15 +85,7 @@ class _PageFileServiceState extends State < PageFileService > {
       ) :
       AppBar(title: new Text(item.title)),
       drawer: DrawerDataDetail(data),
-      body: new Container(
-        decoration: BoxDecoration(
-          image: new DecorationImage(
-            image: AssetImage('assets/image/list_page.jpg'),
-            fit: BoxFit.fill,
-          ),
-        ),
-        child: body(),
-      ),
+      body: body(),
     );
   }
 

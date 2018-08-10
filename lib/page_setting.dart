@@ -14,28 +14,13 @@ class _PageSettingState extends State < PageSetting > {
       appBar: new AppBar(
         title: new Text('设置'),
       ),
-      // body: new ListView(
-      //   children: < Widget > [
-      //     new _MaxResolusionSetting(),
-      //     new _ClearCacheFiles(),
-      //     new _About(),
-      //   ],
-      // )
-      body: new Container(
-        decoration: BoxDecoration(
-          image: new DecorationImage(
-            image: AssetImage('assets/image/list_page.jpg'),
-            fit: BoxFit.fill,
-          ),
-        ),
-        child: new ListView(
-          children: < Widget > [
-            new _MaxResolusionSetting(),
-            new _ClearCacheFiles(),
-            new _About(),
-          ],
-        )
-      ),
+      body: new ListView(
+        children: < Widget > [
+          new _MaxResolusionSetting(),
+          new _ClearCacheFiles(),
+          new _About(),
+        ],
+      )
     );
   }
 }

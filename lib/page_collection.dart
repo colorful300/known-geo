@@ -28,73 +28,36 @@ class _PageCollectionState extends State < PageCollection > {
       appBar: new AppBar(
         title: new Text('我的收藏'),
       ),
-      // body: ListView.builder(
-      //   itemCount: Setting.collections.length,
-      //   itemBuilder: (context, index) {
-      //     Map data = Setting.collections.values.toList()[index];
-      //     if (data.containsKey('format')) {
-      //       return new ListTile(
-      //         leading: leading(data['format']),
-      //         title: new Text(data['title']),
-      //         subtitle: new Text('文件类型: ' + data['format']),
-      //         onTap: () {
-      //           Navigator.push(context,
-      //             new MaterialPageRoute(builder: (context) {
-      //               return new PageOpenFile(data);
-      //             }));
-      //         },
-      //       );
-      //     }
-      //     return new ListTile(
-      //       leading: new Icon(Icons.folder),
-      //       title: new Text(data['title']),
-      //       onTap: () {
-      //         Navigator.push(context,
-      //           new MaterialPageRoute(builder: (context) {
-      //             return new PageFileService(null, data);
-      //           }));
-      //       },
-      //     );
-      //   },
-      // )
-      body: new Container(
-        decoration: BoxDecoration(
-          image: new DecorationImage(
-            image: AssetImage('assets/image/list_page.jpg'),
-            fit: BoxFit.fill,
-          ),
-        ),
-        child: ListView.builder(
-          itemCount: Setting.collections.length,
-          itemBuilder: (context, index) {
-            Map data = Setting.collections.values.toList()[index];
-            if (data.containsKey('format')) {
-              return new ListTile(
-                leading: leading(data['format']),
-                title: new Text(data['title']),
-                subtitle: new Text('文件类型: ' + data['format']),
-                onTap: () {
-                  Navigator.push(context,
-                    new MaterialPageRoute(builder: (context) {
-                      return new PageOpenFile(data);
-                    }));
-                },
-              );
-            }
+      body: ListView.builder(
+        itemCount: Setting.collections.length,
+        itemBuilder: (context, index) {
+          Map data = Setting.collections.values.toList()[index];
+          if (data.containsKey('format')) {
             return new ListTile(
-              leading: new Icon(Icons.folder),
+              leading: leading(data['format']),
               title: new Text(data['title']),
+              subtitle: new Text('文件类型: ' + data['format']),
               onTap: () {
                 Navigator.push(context,
                   new MaterialPageRoute(builder: (context) {
-                    return new PageFileService(null, data);
-                  })
-                );
+                    return new PageOpenFile(data);
+                  }));
               },
             );
-          },
-        )
-      ),
+          }
+          return new ListTile(
+            leading: new Icon(Icons.folder),
+            title: new Text(data['title']),
+            onTap: () {
+              Navigator.push(context,
+                new MaterialPageRoute(builder: (context) {
+                  return new PageFileService(null, data);
+                })
+              );
+            },
+          );
+        },
+      )
     );
   }
 }
