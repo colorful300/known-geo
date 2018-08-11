@@ -31,7 +31,6 @@ flutter:
   assets:
     - assets/txt/service_list.txt
 
-    - assets/image/home_page.jpg
   # assets:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
