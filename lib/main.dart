@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:flutter/animation.dart';
 import 'page_search.dart';
 import 'setting.dart';
 import 'file_service.dart';
@@ -12,6 +13,7 @@ void initGlobals() {
 
 void main() {
   initGlobals();
+  
   return runApp(new AppMain());
 }
 
@@ -22,7 +24,6 @@ class AppMain extends StatelessWidget {
       title: 'Known Geo',
       theme: new ThemeData(
         primarySwatch: Colors.blue,
-        //primaryColor: Colors.white,
       ),
       home: new PageSearch(),
     );
