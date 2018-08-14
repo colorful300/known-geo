@@ -22,17 +22,20 @@ class _PageSearchState extends State<PageSearch> {
   String title = '主页';
 
   Widget body() {
+
     if (!FileService.hasInit) {
       FileService.onInitComplete = () {
         setState(() {});
       };
       return new Center(child: CircleProgress(text: new Text('文件服务列表加载中')));
     }
+
     return new Column(
       mainAxisAlignment:
           centerSearch ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: searchWidgetWithList(),
     );
+
   }
 
   Widget searchWidget() {
@@ -124,14 +127,14 @@ class _PageSearchState extends State<PageSearch> {
                   );
                 }
                 return new ListTile(
-                  title: new Text('全部文档: '),
+                  title: new Text('全部文档: ', ),
                 );
               }
               if (index != 19) {
                 int calculatedIndex = index + page * 18 - 1;
                 return new ListTile(
-                  leading: new Icon(Icons.folder),
-                  title: new Text(fileServiceList[calculatedIndex].title),
+                  leading: new Icon(Icons.folder,),
+                  title: new Text(fileServiceList[calculatedIndex].title, ),
                   onTap: () {
                     Navigator.push(
                         context,
