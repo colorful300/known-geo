@@ -26,19 +26,7 @@ class _PageSearchState extends State<PageSearch> {
       FileService.onInitComplete = () {
         setState(() {});
       };
-      return new Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          new Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                new CircularProgressIndicator(),
-                new Text('文件服务列表加载中')
-              ])
-        ],
-      );
+      return new Center(child: CircleProgress(text: new Text('文件服务列表加载中')));
     }
     return new Column(
       mainAxisAlignment:
@@ -49,16 +37,13 @@ class _PageSearchState extends State<PageSearch> {
 
   Widget searchWidget() {
     return new Container(
-      padding: new EdgeInsets.fromLTRB(16.0, 0.0, 32.0, 0.0),
-      decoration: new BoxDecoration(
-        borderRadius: BorderRadius.circular(2.0),
-        //  image:  //  then there should be a image
-      ),
+      margin: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0.0),
+      padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
       child: new TextField(
         controller: textEditingController,
         decoration: new InputDecoration(
-          icon: new Icon(Icons.search),
-          hintText: '搜索关键词，如「成都 地下水」',
+          suffixIcon: new Icon(Icons.search),
+          hintText: '搜索关键词，如「成都 土壤」',
         ),
         onChanged: (input) {
           zeroItem = false;
@@ -118,7 +103,7 @@ class _PageSearchState extends State<PageSearch> {
             controller: scrollController,
             itemCount: fileServiceList.length - page * 18 > 18
                 ? 20
-                : fileServiceList.length - page * 18,
+                : fileServiceList.length - page * 18 + 1,
             itemBuilder: (context, index) {
               if (index == 0) {
                 if (page != 0) {
