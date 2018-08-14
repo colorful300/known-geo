@@ -145,7 +145,7 @@ class FileService {
             for (FileServiceItem item in fileServiceList) {
               bool flag = true;
               for (String keyword in keywords) {
-                if (!item.title.contains(keyword)) {
+                if (!item.title.toLowerCase().contains(keyword.toLowerCase())) {
                   flag = false;
                   break;
                 }
