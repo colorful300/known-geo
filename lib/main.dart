@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'page_search.dart';
 import 'setting.dart';
 import 'file_service.dart';
+import 'dart:async';
 
-void initGlobals() {
+Future<Null> initGlobals() async {
+  FileService.onInitComplete = () {
+    runApp(new AppMain());
+  };
   FileService.init();
   Setting.load();
   Setting.loadCollections();
@@ -13,8 +17,6 @@ void initGlobals() {
 
 void main() {
   initGlobals();
-  
-  return runApp(new AppMain());
 }
 
 class AppMain extends StatelessWidget {

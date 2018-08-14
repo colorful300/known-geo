@@ -84,7 +84,7 @@ class FileService {
       : client = new Http.Client(),
         serviceData = new Map();
 
-  static init() async {
+  static Future<Null> init() async {
     ReceivePort receivePort = new ReceivePort();
     Isolate.spawn(anotherIsolate, receivePort.sendPort);
     receivePort.listen((data) async {

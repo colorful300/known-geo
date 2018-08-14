@@ -1,5 +1,6 @@
 import 'file_downloader.dart';
 import 'dart:convert';
+import 'dart:async';
 
 abstract class Setting {
   static FileDownloader fileSaver = new FileDownloader();
@@ -10,33 +11,33 @@ abstract class Setting {
   static Map<String, dynamic> collections = new Map<String, Map>();
   static List downloads = new List();
 
-  static void save() async {
+  static Future<Null> save() async {
     await fileSaver.write(jsonEncode(settings), 'settings.json');
   }
 
-  static void load() async {
+  static Future<Null> load() async {
     String data = await fileSaver.read('settings.json');
     if (data != null) {
       settings = jsonDecode(data);
     }
   }
 
-  static void saveCollections() async {
+  static Future<Null> saveCollections() async {
     await fileSaver.write(jsonEncode(collections), 'collections.json');
   }
 
-  static void loadCollections() async {
+  static Future<Null> loadCollections() async {
     String collectionData = await fileSaver.read('collections.json');
     if (collectionData != null) {
       collections = jsonDecode(collectionData);
     }
   }
 
-  static void saveDownloads() async {
+  static Future<Null> saveDownloads() async {
     await fileSaver.write(jsonEncode(downloads), 'downloads.json');
   }
 
-  static void loadDownloads() async {
+  static Future<Null> loadDownloads() async {
     String data = await fileSaver.read('downloads.json');
     if (data != null) {
       downloads = jsonDecode(data);
