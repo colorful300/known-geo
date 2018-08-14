@@ -37,13 +37,18 @@ class _PageSearchState extends State<PageSearch> {
 
   Widget searchWidget() {
     return new Container(
-      margin: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0.0),
-      padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
+      margin: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, centerSearch ? 32.0 : 0.0),
+      padding: EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 0.0),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.blue),
+        borderRadius: BorderRadius.circular(4.0),
+      ),
       child: new TextField(
         controller: textEditingController,
         decoration: new InputDecoration(
           suffixIcon: new Icon(Icons.search),
-          hintText: '搜索关键词，如「成都 土壤」',
+          hintText: '搜索关键词',
+          border: InputBorder.none,
         ),
         onChanged: (input) {
           zeroItem = false;
@@ -166,6 +171,11 @@ class _PageSearchState extends State<PageSearch> {
                     ? new TextedIcon(Icons.no_sim, text: new Text('空'))
                     : new CircleProgress(text: new Text('正在搜索')))));
       }
+    } else {
+      list.add(ListTile(
+        title: new Text('搜索建议'),
+        subtitle: new Text('使用空格来分隔多个关键词\n如「成都 土壤」'),
+      ));
     }
     return list;
   }
