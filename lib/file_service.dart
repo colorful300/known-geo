@@ -175,7 +175,7 @@ class FileService {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
         },
         body: 'FileId=' + fileId));
-    serviceData = jsonDecode(Escape.decode(response.body));
+    serviceData = jsonDecode(Escape.decode(response.body).replaceAll('\t', ' '));
     if (onLoadComplete != null) onLoadComplete(this);
   }
 
