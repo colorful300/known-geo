@@ -52,7 +52,7 @@ class _PageFileServiceState extends State<PageFileService> {
     List<Map> fileList = new List<Map>();
     data['files'].forEach((key, value) {
       for (Map file in value) {
-        if (file['format'] != 'none') {
+        if (file['format'] == 'jpg') {
           fileList.add(file);
         }
       }
